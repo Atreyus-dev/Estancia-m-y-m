@@ -1,0 +1,723 @@
+
+/* =========================================
+   DESCUBRE NOBSA — GUÍA TURÍSTICA
+   ========================================= */
+
+:root {
+  --cream: #f6f1e7;
+  --paper: #fffdf8;
+  --forest: #244638;
+  --deep: #1e332b;
+  --terracotta: #b9664b;
+  --sand: #e7dcc9;
+  --muted: #6d746b;
+  --line: #ded6c8;
+  --pale-green: #e6ebe2;
+  --shadow: 0 16px 40px rgba(36, 70, 56, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 32px 16px;
+  background: #e9e5dc;
+  color: var(--deep);
+  font-family: "DM Sans", Arial, sans-serif;
+  line-height: 1.55;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+.poster {
+  position: relative;
+  width: min(100%, 980px);
+  margin: 0 auto;
+  overflow: hidden;
+  background: var(--cream);
+  box-shadow: 0 24px 70px rgba(24, 39, 31, 0.16);
+}
+
+/* ENCABEZADO */
+
+.hero {
+  position: relative;
+  min-height: 360px;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  padding: 54px 6.5% 56px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 440px;
+}
+
+.eyebrow,
+.kicker,
+.tag {
+  margin: 0;
+  color: var(--terracotta);
+  font-size: 0.69rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 13px 0 15px;
+  color: var(--forest);
+  font: 700 clamp(3.5rem, 8vw, 6rem)/0.88
+    "Playfair Display", Georgia, serif;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+}
+
+h1 em {
+  color: var(--terracotta);
+  font-weight: 500;
+}
+
+.accent-line {
+  width: 54px;
+  height: 4px;
+  margin: 22px 0 17px;
+  border-radius: 4px;
+  background: var(--terracotta);
+}
+
+.subtitle {
+  max-width: 360px;
+  margin-bottom: 8px;
+  font: 600 clamp(1rem, 2vw, 1.3rem)/1.35
+    "Playfair Display", Georgia, serif;
+}
+
+.intro {
+  max-width: 320px;
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.hero-photo {
+  position: relative;
+  z-index: 1;
+  height: 265px;
+  margin-left: -12px;
+  border-radius: 48% 48% 12px 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.hero-photo img {
+  height: 100%;
+  filter: saturate(0.75);
+}
+
+.photo-note {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 7px 10px;
+  border-radius: 2px;
+  background: rgba(246, 241, 231, 0.93);
+  color: var(--forest);
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+/* SECCIONES */
+
+.section {
+  padding: 34px 6.5%;
+}
+
+.section + .section {
+  padding-top: 24px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.section-number {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  border: 1px solid #c8bda9;
+  border-radius: 50%;
+  color: var(--terracotta);
+  font: 600 1rem "Playfair Display", Georgia, serif;
+}
+
+.section-heading .kicker {
+  margin-bottom: 3px;
+  font-size: 0.62rem;
+}
+
+h2 {
+  margin-bottom: 0;
+  color: var(--forest);
+  font: 600 clamp(1.4rem, 3vw, 2rem)/1.15
+    "Playfair Display", Georgia, serif;
+}
+
+h3 {
+  margin: 0 0 8px;
+  color: var(--forest);
+  font: 600 1.12rem/1.2
+    "Playfair Display", Georgia, serif;
+}
+
+.cards {
+  display: grid;
+  gap: 18px;
+}
+
+.two-col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* TARJETAS CULTURALES */
+
+.place-card,
+.food-card,
+.excursion-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--paper);
+}
+
+.place-card {
+  display: grid;
+  grid-template-columns: 39% 61%;
+  min-height: 190px;
+}
+
+.place-card > img {
+  height: 100%;
+  min-height: 190px;
+}
+
+.card-body {
+  padding: 18px 16px;
+}
+
+.card-body p,
+.mini-copy p,
+.excursion-copy p {
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+/* BOTONES DE MAPS */
+
+.map-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 36px;
+  padding: 9px 12px;
+  border: 1px solid var(--forest);
+  border-radius: 3px;
+  background: var(--forest);
+  color: white;
+  font-size: 0.73rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.map-button span {
+  font-size: 0.95rem;
+  line-height: 0.8;
+}
+
+.map-button:hover {
+  transform: translateY(-2px);
+  background: #315a48;
+}
+
+.map-button.secondary {
+  background: transparent;
+  color: var(--forest);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+/* ARTESANÍA */
+
+.craft-feature {
+  position: relative;
+  min-height: 270px;
+  overflow: hidden;
+  border-radius: 9px;
+  background: var(--forest);
+}
+
+.craft-feature > img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  opacity: 0.74;
+}
+
+.craft-feature::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(
+    90deg,
+    rgba(22, 44, 34, 0.94) 0%,
+    rgba(22, 44, 34, 0.73) 48%,
+    rgba(22, 44, 34, 0.05) 100%
+  );
+}
+
+.craft-overlay {
+  position: relative;
+  z-index: 1;
+  max-width: 470px;
+  padding: 30px;
+  color: white;
+}
+
+.kicker.light {
+  color: #e4b39e;
+}
+
+.craft-overlay h3 {
+  margin-top: 9px;
+  color: white;
+  font-size: 1.8rem;
+}
+
+.craft-overlay p:not(.kicker) {
+  max-width: 400px;
+  margin-bottom: 17px;
+  color: #f0eee6;
+  font-size: 0.87rem;
+}
+
+.light-button {
+  border-color: var(--cream);
+  background: var(--cream);
+  color: var(--forest);
+}
+
+.light-button:hover {
+  background: white;
+}
+
+.mini-feature {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+  padding: 19px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--pale-green);
+}
+
+.mini-icon {
+  display: grid;
+  place-items: center;
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
+  border-radius: 50%;
+  background: var(--forest);
+  color: white;
+  font-size: 1.2rem;
+}
+
+.mini-copy {
+  flex: 1;
+}
+
+.mini-copy h3 {
+  margin-bottom: 5px;
+  font-size: 1.1rem;
+}
+
+.mini-copy p {
+  margin-bottom: 0;
+}
+
+/* RESTAURANTES Y CAFÉS */
+
+.four-col {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.food-card img {
+  height: 125px;
+}
+
+.food-body {
+  padding: 14px 13px 16px;
+}
+
+.tag {
+  margin-bottom: 7px;
+  font-size: 0.57rem;
+  letter-spacing: 0.12em;
+}
+
+.food-body h3 {
+  min-height: 45px;
+  font-size: 1rem;
+}
+
+.food-body a {
+  color: var(--terracotta);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.food-body a:hover {
+  text-decoration: underline;
+}
+
+.small-note {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-style: italic;
+}
+
+/* EXCURSIONES */
+
+.excursion-section {
+  padding-bottom: 40px;
+}
+
+.excursion-card {
+  display: grid;
+  grid-template-columns: 48% 52%;
+}
+
+.excursion-card > img {
+  min-height: 235px;
+  height: 100%;
+}
+
+.excursion-copy {
+  align-self: center;
+  padding: 26px;
+}
+
+.excursion-copy h3 {
+  font-size: 1.55rem;
+}
+
+.extra-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 13px;
+}
+
+.extra-links a {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 42px 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(255, 253, 248, 0.55);
+  text-decoration: none;
+}
+
+.extra-links span {
+  color: var(--terracotta);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.extra-links strong {
+  color: var(--forest);
+  font: 600 0.95rem "Playfair Display", Georgia, serif;
+}
+
+.extra-links b {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  color: var(--terracotta);
+}
+
+/* PIE DE PÁGINA */
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 25px 6.5%;
+  background: var(--forest);
+  color: var(--cream);
+}
+
+.footer-mark {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  border: 1px solid rgba(246, 241, 231, 0.6);
+  border-radius: 50%;
+  font: italic 1.7rem "Playfair Display", Georgia, serif;
+}
+
+.footer-copy {
+  flex: 1;
+}
+
+.footer-title {
+  margin-bottom: 3px;
+  font: 600 1.15rem "Playfair Display", Georgia, serif;
+}
+
+.footer-copy p:last-child {
+  max-width: 650px;
+  margin-bottom: 0;
+  color: #d9e0d6;
+  font-size: 0.73rem;
+}
+
+.footer-map {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(246, 241, 231, 0.6);
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.credits {
+  margin: 0;
+  padding: 12px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+}
+
+/* RESPONSIVE: TABLETAS Y CELULARES */
+
+@media (max-width: 720px) {
+  body {
+    padding: 0;
+    background: var(--cream);
+  }
+
+  .poster {
+    box-shadow: none;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 38px 7% 28px;
+  }
+
+  .hero-photo {
+    height: 230px;
+    margin: 27px 0 0;
+    border-radius: 120px 120px 8px 8px;
+  }
+
+  .section {
+    padding: 28px 7%;
+  }
+
+  .section + .section {
+    padding-top: 20px;
+  }
+
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .place-card {
+    grid-template-columns: 35% 65%;
+  }
+
+  .four-col {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .food-card img {
+    height: 145px;
+  }
+
+  .craft-feature {
+    min-height: 310px;
+  }
+
+  .craft-overlay {
+    padding: 25px;
+  }
+
+  .mini-feature {
+    flex-wrap: wrap;
+  }
+
+  .mini-copy {
+    flex-basis: calc(100% - 60px);
+  }
+
+  .mini-feature > .map-button {
+    margin-left: 59px;
+  }
+
+  .excursion-card {
+    grid-template-columns: 1fr;
+  }
+
+  .excursion-card > img {
+    min-height: 190px;
+    max-height: 230px;
+  }
+
+  .excursion-copy {
+    padding: 22px;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero {
+    padding-top: 31px;
+  }
+
+  .hero-photo {
+    height: 190px;
+  }
+
+  .place-card {
+    grid-template-columns: 1fr;
+  }
+
+  .place-card > img {
+    height: 150px;
+    min-height: 150px;
+  }
+
+  .card-body {
+    padding: 16px;
+  }
+
+  .four-col {
+    gap: 10px;
+  }
+
+  .food-card img {
+    height: 105px;
+  }
+
+  .food-body {
+    padding: 12px 10px;
+  }
+
+  .food-body h3 {
+    min-height: 0;
+    font-size: 0.92rem;
+  }
+
+  .extra-links {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    align-items: flex-start;
+    padding: 22px 7%;
+  }
+
+  .footer-mark {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .footer-title {
+    font-size: 1rem;
+  }
+}
+
+/* IMPRESIÓN */
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+
+  body {
+    padding: 0;
+    background: white;
+  }
+
+  .poster {
+    width: 100%;
+    overflow: visible;
+    box-shadow: none;
+  }
+
+  .hero,
+  .section,
+  .place-card,
+  .food-card,
+  .excursion-card,
+  .footer {
+    break-inside: avoid;
+  }
+
+  .map-button,
+  .footer-map {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  a {
+    break-inside: avoid;
+  }
+}
