@@ -1,20 +1,30 @@
 
 /* =========================================
-   DESCUBRE NOBSA — GUÍA TURÍSTICA
-   ========================================= */
+   1. VARIABLES E IDENTIDAD VISUAL
+========================================= */
 
 :root {
-  --cream: #f6f1e7;
+  --cream: #f7f4ed;
   --paper: #fffdf8;
-  --forest: #244638;
-  --deep: #1e332b;
-  --terracotta: #b9664b;
-  --sand: #e7dcc9;
-  --muted: #6d746b;
-  --line: #ded6c8;
-  --pale-green: #e6ebe2;
-  --shadow: 0 16px 40px rgba(36, 70, 56, 0.08);
+  --green: #344b3c;
+  --green-deep: #26382d;
+  --green-light: #e7ece4;
+  --terracotta: #b96e50;
+  --ink: #292e29;
+  --muted: #74776e;
+  --line: #e3dfd4;
+  --white: #ffffff;
+
+  --font-heading: "Playfair Display", Georgia, serif;
+  --font-body: "DM Sans", Arial, sans-serif;
+
+  --page-width: 1200px;
+  --section-space: clamp(64px, 9vw, 116px);
 }
+
+/* =========================================
+   2. REINICIO Y CONFIGURACIÓN GENERAL
+========================================= */
 
 * {
   box-sizing: border-box;
@@ -22,702 +32,1400 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 88px;
 }
 
 body {
   margin: 0;
-  padding: 32px 16px;
-  background: #e9e5dc;
-  color: var(--deep);
-  font-family: "DM Sans", Arial, sans-serif;
-  line-height: 1.55;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
 }
 
-a {
-  color: inherit;
+body.menu-open {
+  overflow: hidden;
 }
 
 img {
   display: block;
-  width: 100%;
-  object-fit: cover;
+  max-width: 100%;
 }
 
-.poster {
-  position: relative;
-  width: min(100%, 980px);
-  margin: 0 auto;
-  overflow: hidden;
-  background: var(--cream);
-  box-shadow: 0 24px 70px rgba(24, 39, 31, 0.16);
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-/* ENCABEZADO */
-
-.hero {
-  position: relative;
-  min-height: 360px;
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  align-items: center;
-  padding: 54px 6.5% 56px;
-  overflow: hidden;
-  isolation: isolate;
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
 }
 
-.hero-copy {
-  position: relative;
-  z-index: 2;
-  max-width: 440px;
+button {
+  font: inherit;
 }
 
-.eyebrow,
-.kicker,
-.tag {
-  margin: 0;
-  color: var(--terracotta);
-  font-size: 0.69rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 4px;
 }
 
-h1 {
-  margin: 13px 0 15px;
-  color: var(--forest);
-  font: 700 clamp(3.5rem, 8vw, 6rem)/0.88
-    "Playfair Display", Georgia, serif;
-  letter-spacing: -0.055em;
-  text-transform: uppercase;
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
 }
 
-h1 em {
-  color: var(--terracotta);
+h1,
+h2,
+h3 {
   font-weight: 500;
 }
 
-.accent-line {
-  width: 54px;
-  height: 4px;
-  margin: 22px 0 17px;
-  border-radius: 4px;
-  background: var(--terracotta);
+em {
+  color: var(--terracotta);
+  font-family: var(--font-heading);
+  font-weight: 400;
 }
 
-.subtitle {
-  max-width: 360px;
-  margin-bottom: 8px;
-  font: 600 clamp(1rem, 2vw, 1.3rem)/1.35
-    "Playfair Display", Georgia, serif;
+.section-shell {
+  width: min(100% - 64px, var(--page-width));
+  margin-inline: auto;
 }
 
-.intro {
-  max-width: 320px;
-  margin-bottom: 0;
-  color: var(--muted);
-  font-size: 0.88rem;
+.eyebrow {
+  display: inline-block;
+  color: var(--terracotta);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.4px;
+  line-height: 1.5;
 }
 
-.hero-photo {
-  position: relative;
-  z-index: 1;
-  height: 265px;
-  margin-left: -12px;
-  border-radius: 48% 48% 12px 12px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
+/* =========================================
+   3. PANTALLA DE BIENVENIDA
+========================================= */
+
+.intro-screen {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--cream);
+  animation: intro-exit 0.9s ease-in-out 1.7s forwards;
 }
 
-.hero-photo img {
-  height: 100%;
-  filter: saturate(0.75);
+.intro-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  animation: intro-logo-enter 0.8s ease both;
 }
 
-.photo-note {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  padding: 7px 10px;
-  border-radius: 2px;
-  background: rgba(246, 241, 231, 0.93);
-  color: var(--forest);
-  font-size: 0.68rem;
+.intro-logo {
+  width: clamp(120px, 22vw, 80dvw);
+  max-height: 82vh;
+  object-fit: contain;
+}
+
+.intro-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.intro-fallback[hidden] {
+  display: none;
+}
+
+.fallback-symbol {
+  display: grid;
+  width: 72px;
+  height: 72px;
+  place-items: center;
+  border: 1px solid var(--green);
+  border-radius: 50%;
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: 36px;
+}
+
+.fallback-name {
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: 28px;
+}
+
+.intro-caption {
+  color: var(--green);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-align: center;
+}
+
+@keyframes intro-logo-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes intro-exit {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+/* =========================================
+   4. ENCABEZADO Y NAVEGACIÓN
+========================================= */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgb(247 244 237 / 94%);
+  border-bottom: 1px solid rgb(52 75 60 / 8%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(100% - 64px, var(--page-width));
+  min-height: 76px;
+  margin-inline: auto;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo {
+  height: 60px;
+  object-fit: contain;
+}
+
+.brand-name,
+.footer-brand {
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: 25px;
   font-weight: 600;
 }
 
-/* SECCIONES */
-
-.section {
-  padding: 34px 6.5%;
+.brand-name span,
+.footer-brand span {
+  color: var(--terracotta);
 }
 
-.section + .section {
-  padding-top: 24px;
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+}
+
+.main-nav > a {
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+  transition: color 180ms ease;
+}
+
+.main-nav > a:hover {
+  color: var(--terracotta);
+}
+
+.main-nav .nav-contact {
+  padding: 10px 17px;
+  border: 1px solid var(--green);
+  border-radius: 3px;
+  color: var(--green);
+}
+
+.main-nav .nav-contact:hover {
+  background: var(--green);
+  color: var(--white);
+}
+
+.menu-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin: 5px 0;
+  background: var(--green);
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.menu-toggle[aria-expanded="true"] span:first-child {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle[aria-expanded="true"] span:last-child {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* =========================================
+   5. HERO / BIENVENIDA
+========================================= */
+
+.hero {
+  position: relative;
+  display: flex;
+  min-height: min(700px, 82vh);
+  min-height: min(700px, 82svh);
+  align-items: center;
+  overflow: hidden;
+  background: var(--green-deep);
+  color: var(--white);
+}
+
+.hero-image,
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-image {
+  background-image: url("assets/hero-nobsa.jpg");
+  background-position: center;
+  background-size: cover;
+  transform: scale(1.02);
+  animation: hero-image-enter 1.2s ease both;
+}
+
+.hero-overlay {
+  background:
+    linear-gradient(
+      90deg,
+      rgb(25 39 30 / 78%) 0%,
+      rgb(25 39 30 / 57%) 47%,
+      rgb(25 39 30 / 16%) 100%
+    );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: min(670px, 76%);
+  padding: 100px 0 120px;
+  margin-left: clamp(30px, 8vw, 105px);
+}
+
+.hero-eyebrow {
+  color: #ead3c4;
+}
+
+.hero h1 {
+  margin: 24px 0;
+  font-family: var(--font-heading);
+  font-size: clamp(48px, 7vw, 86px);
+  font-weight: 500;
+  letter-spacing: -2.6px;
+  line-height: 1.08;
+}
+
+.hero h1 em {
+  color: #e8b59b;
+}
+
+.hero-description {
+  max-width: 480px;
+  margin-bottom: 30px;
+  color: rgb(255 255 255 / 86%);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 13px 19px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.button-primary {
+  background: var(--green);
+  color: var(--white);
+}
+
+.button-primary:hover {
+  background: var(--green-deep);
+}
+
+.hero .button-primary {
+  background: var(--cream);
+  color: var(--green);
+}
+
+.hero .button-primary:hover {
+  background: var(--white);
+}
+
+.button-outline {
+  border-color: rgb(255 255 255 / 65%);
+  color: var(--white);
+}
+
+.button-outline:hover {
+  background: rgb(255 255 255 / 12%);
+  border-color: var(--white);
+}
+
+.hero-location {
+  position: absolute;
+  z-index: 2;
+  right: 30px;
+  bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgb(255 255 255 / 90%);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.7px;
+}
+
+.location-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e8b59b;
+}
+
+.scroll-cue {
+  position: absolute;
+  z-index: 2;
+  bottom: 27px;
+  left: clamp(30px, 8vw, 105px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgb(255 255 255 / 80%);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+}
+
+.scroll-arrow {
+  font-size: 16px;
+  transition: transform 180ms ease;
+}
+
+.scroll-cue:hover .scroll-arrow {
+  transform: translateY(4px);
+}
+
+@keyframes hero-image-enter {
+  from {
+    opacity: 0.7;
+    transform: scale(1.06);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+/* =========================================
+   6. PRESENTACIÓN
+========================================= */
+
+.welcome-section {
+  padding-block: var(--section-space);
+}
+
+.welcome-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+  color: var(--terracotta);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.small-line {
+  width: 28px;
+  height: 1px;
+  background: var(--terracotta);
+}
+
+.welcome-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 50px;
+}
+
+.welcome-grid h2,
+.section-heading h2,
+.experiences-intro h2,
+.stay-heading h2,
+.closing-content h2 {
+  margin-bottom: 0;
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: clamp(34px, 4.5vw, 51px);
+  font-weight: 500;
+  letter-spacing: -1px;
+  line-height: 1.22;
+}
+
+.welcome-grid p {
+  max-width: 450px;
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 2;
+}
+
+/* =========================================
+   7. GUÍAS PRINCIPALES
+========================================= */
+
+.guides-section {
+  padding-bottom: var(--section-space);
 }
 
 .section-heading {
   display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 22px;
+  align-items: end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 38px;
 }
 
-.section-number {
+.section-heading h2 {
+  margin-top: 14px;
+}
+
+.section-heading > p {
+  max-width: 340px;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.guides-grid {
   display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  flex: 0 0 42px;
-  border: 1px solid #c8bda9;
-  border-radius: 50%;
-  color: var(--terracotta);
-  font: 600 1rem "Playfair Display", Georgia, serif;
-}
-
-.section-heading .kicker {
-  margin-bottom: 3px;
-  font-size: 0.62rem;
-}
-
-h2 {
-  margin-bottom: 0;
-  color: var(--forest);
-  font: 600 clamp(1.4rem, 3vw, 2rem)/1.15
-    "Playfair Display", Georgia, serif;
-}
-
-h3 {
-  margin: 0 0 8px;
-  color: var(--forest);
-  font: 600 1.12rem/1.2
-    "Playfair Display", Georgia, serif;
-}
-
-.cards {
-  display: grid;
-  gap: 18px;
-}
-
-.two-col {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
 }
 
-/* TARJETAS CULTURALES */
-
-.place-card,
-.food-card,
-.excursion-card {
+.guide-card {
+  min-width: 0;
   overflow: hidden;
   border: 1px solid var(--line);
-  border-radius: 9px;
+  background: var(--paper);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.guide-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgb(41 46 41 / 7%);
+}
+
+.guide-image-wrap {
+  position: relative;
+  height: clamp(220px, 28vw, 330px);
+  overflow: hidden;
+  background: var(--green-light);
+}
+
+.guide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 450ms ease;
+}
+
+.guide-card:hover .guide-image {
+  transform: scale(1.04);
+}
+
+.guide-index {
+  position: absolute;
+  right: 18px;
+  bottom: 17px;
+  padding: 8px 10px;
+  background: rgb(247 244 237 / 94%);
+  color: var(--green);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+}
+
+.guide-card-content {
+  padding: clamp(22px, 3vw, 35px);
+}
+
+.card-kicker {
+  color: var(--terracotta);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+}
+
+.guide-card h3 {
+  margin: 12px 0;
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: clamp(27px, 3vw, 34px);
+  line-height: 1.2;
+}
+
+.guide-card-content > p {
+  min-height: 52px;
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--terracotta);
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 700;
+  transition: color 180ms ease, gap 180ms ease;
+}
+
+.text-link:hover {
+  gap: 21px;
+  color: var(--terracotta);
+}
+
+/* =========================================
+   8. EXPERIENCIAS
+========================================= */
+
+.experiences-section {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: clamp(35px, 6vw, 80px);
+  padding-block: var(--section-space);
+  border-top: 1px solid var(--line);
+}
+
+.experiences-intro {
+  align-self: center;
+}
+
+.experiences-intro h2 {
+  margin-top: 17px;
+}
+
+.experiences-intro > p {
+  max-width: 390px;
+  margin: 22px 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 2;
+}
+
+.experiences-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 18px;
+}
+
+.experience-item {
+  min-width: 0;
+}
+
+.experience-item:first-child {
+  grid-column: 1 / -1;
+}
+
+.experience-image {
+  position: relative;
+  height: 190px;
+  overflow: hidden;
+  background: var(--green-light);
+}
+
+.experience-item:first-child .experience-image {
+  height: 245px;
+}
+
+.experience-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms ease;
+}
+
+.experience-item:hover .experience-image img {
+  transform: scale(1.05);
+}
+
+.experience-number {
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  background: var(--cream);
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.experience-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 13px;
+}
+
+.experience-caption h3 {
+  margin-bottom: 3px;
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: 19px;
+}
+
+.experience-caption p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.experience-arrow {
+  color: var(--terracotta);
+  font-size: 19px;
+  transition: transform 180ms ease;
+}
+
+.experience-item:hover .experience-arrow {
+  transform: translate(3px, -3px);
+}
+
+/* =========================================
+   9. INFORMACIÓN DEL ALOJAMIENTO
+========================================= */
+
+.stay-section {
+  padding-block: var(--section-space);
+  border-top: 1px solid var(--line);
+}
+
+.stay-heading {
+  max-width: 670px;
+  margin-bottom: 38px;
+}
+
+.stay-heading h2 {
+  margin-top: 15px;
+}
+
+.stay-heading > p {
+  max-width: 520px;
+  margin: 17px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.stay-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.stay-card {
+  min-width: 0;
+  padding: clamp(22px, 3vw, 32px);
+  border: 1px solid var(--line);
   background: var(--paper);
 }
 
-.place-card {
+.stay-icon {
   display: grid;
-  grid-template-columns: 39% 61%;
-  min-height: 190px;
-}
-
-.place-card > img {
-  height: 100%;
-  min-height: 190px;
-}
-
-.card-body {
-  padding: 18px 16px;
-}
-
-.card-body p,
-.mini-copy p,
-.excursion-copy p {
-  margin-bottom: 14px;
-  color: var(--muted);
-  font-size: 0.82rem;
-}
-
-/* BOTONES DE MAPS */
-
-.map-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  min-height: 36px;
-  padding: 9px 12px;
-  border: 1px solid var(--forest);
-  border-radius: 3px;
-  background: var(--forest);
-  color: white;
-  font-size: 0.73rem;
-  font-weight: 700;
-  text-decoration: none;
-  transition: transform 0.18s ease, background 0.18s ease;
-}
-
-.map-button span {
-  font-size: 0.95rem;
-  line-height: 0.8;
-}
-
-.map-button:hover {
-  transform: translateY(-2px);
-  background: #315a48;
-}
-
-.map-button.secondary {
-  background: transparent;
-  color: var(--forest);
-}
-
-.button-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-}
-
-/* ARTESANÍA */
-
-.craft-feature {
-  position: relative;
-  min-height: 270px;
-  overflow: hidden;
-  border-radius: 9px;
-  background: var(--forest);
-}
-
-.craft-feature > img {
-  position: absolute;
-  inset: 0;
-  height: 100%;
-  opacity: 0.74;
-}
-
-.craft-feature::after {
-  position: absolute;
-  inset: 0;
-  content: "";
-  background: linear-gradient(
-    90deg,
-    rgba(22, 44, 34, 0.94) 0%,
-    rgba(22, 44, 34, 0.73) 48%,
-    rgba(22, 44, 34, 0.05) 100%
-  );
-}
-
-.craft-overlay {
-  position: relative;
-  z-index: 1;
-  max-width: 470px;
-  padding: 30px;
-  color: white;
-}
-
-.kicker.light {
-  color: #e4b39e;
-}
-
-.craft-overlay h3 {
-  margin-top: 9px;
-  color: white;
-  font-size: 1.8rem;
-}
-
-.craft-overlay p:not(.kicker) {
-  max-width: 400px;
-  margin-bottom: 17px;
-  color: #f0eee6;
-  font-size: 0.87rem;
-}
-
-.light-button {
-  border-color: var(--cream);
-  background: var(--cream);
-  color: var(--forest);
-}
-
-.light-button:hover {
-  background: white;
-}
-
-.mini-feature {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-top: 14px;
-  padding: 19px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--pale-green);
-}
-
-.mini-icon {
-  display: grid;
-  place-items: center;
   width: 43px;
   height: 43px;
-  flex: 0 0 43px;
+  margin-bottom: 20px;
+  place-items: center;
   border-radius: 50%;
-  background: var(--forest);
-  color: white;
-  font-size: 1.2rem;
+  background: var(--green-light);
+  color: var(--green);
 }
 
-.mini-copy {
-  flex: 1;
+.stay-icon svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
 }
 
-.mini-copy h3 {
-  margin-bottom: 5px;
-  font-size: 1.1rem;
+.stay-card h3 {
+  margin-bottom: 8px;
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: 24px;
+  line-height: 1.3;
 }
 
-.mini-copy p {
-  margin-bottom: 0;
-}
-
-/* RESTAURANTES Y CAFÉS */
-
-.four-col {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.food-card img {
-  height: 125px;
-}
-
-.food-body {
-  padding: 14px 13px 16px;
-}
-
-.tag {
-  margin-bottom: 7px;
-  font-size: 0.57rem;
-  letter-spacing: 0.12em;
-}
-
-.food-body h3 {
+.stay-description {
   min-height: 45px;
-  font-size: 1rem;
-}
-
-.food-body a {
-  color: var(--terracotta);
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.food-body a:hover {
-  text-decoration: underline;
-}
-
-.small-note {
-  margin: 12px 0 0;
+  margin-bottom: 20px;
   color: var(--muted);
-  font-size: 0.72rem;
-  font-style: italic;
+  font-size: 12px;
+  line-height: 1.8;
 }
 
-/* EXCURSIONES */
-
-.excursion-section {
-  padding-bottom: 40px;
+.detail-row {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 11px 0;
+  border-top: 1px solid var(--line);
+  font-size: 11px;
 }
 
-.excursion-card {
+.detail-row > span {
+  flex-shrink: 0;
+  color: var(--muted);
+}
+
+.detail-row strong {
+  color: var(--green);
+  font-weight: 600;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.stay-list {
   display: grid;
-  grid-template-columns: 48% 52%;
+  gap: 10px;
+  padding-left: 17px;
+  color: var(--muted);
+  font-size: 12px;
 }
 
-.excursion-card > img {
-  min-height: 235px;
-  height: 100%;
+.stay-list li::marker {
+  color: var(--terracotta);
 }
 
-.excursion-copy {
-  align-self: center;
-  padding: 26px;
+.button-full {
+  width: 100%;
+  margin-top: 20px;
 }
 
-.excursion-copy h3 {
-  font-size: 1.55rem;
+.privacy-note {
+  margin: 20px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.8;
 }
 
-.extra-links {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 13px;
-}
+/* =========================================
+   10. CIERRE
+========================================= */
 
-.extra-links a {
+.closing-section {
   position: relative;
+  display: grid;
+  min-height: 390px;
+  place-items: center;
+  overflow: hidden;
+  background: var(--green-deep);
+  color: var(--white);
+  text-align: center;
+}
+
+.closing-background {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      rgb(29 45 34 / 78%),
+      rgb(29 45 34 / 83%)
+    ),
+    url("assets/hero-nobsa.jpg") center 55% / cover;
+}
+
+.closing-content {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  padding: 75px 20px;
+}
+
+.closing-content .eyebrow {
+  color: #e8b59b;
+}
+
+.closing-content h2 {
+  margin-top: 20px;
+  color: var(--white);
+}
+
+.closing-content h2 em {
+  color: #e8b59b;
+}
+
+.closing-content > p {
+  max-width: 480px;
+  margin: 20px auto 25px;
+  color: rgb(255 255 255 / 80%);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.button-light {
+  background: var(--cream);
+  color: var(--green);
+}
+
+.button-light:hover {
+  background: var(--white);
+}
+
+/* =========================================
+   11. PIE DE PÁGINA
+========================================= */
+
+.site-footer {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 14px 42px 14px 16px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: rgba(255, 253, 248, 0.55);
-  text-decoration: none;
-}
-
-.extra-links span {
-  color: var(--terracotta);
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.extra-links strong {
-  color: var(--forest);
-  font: 600 0.95rem "Playfair Display", Georgia, serif;
-}
-
-.extra-links b {
-  position: absolute;
-  top: 50%;
-  right: 15px;
-  transform: translateY(-50%);
-  color: var(--terracotta);
-}
-
-/* PIE DE PÁGINA */
-
-.footer {
-  display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 25px 6.5%;
-  background: var(--forest);
-  color: var(--cream);
-}
-
-.footer-mark {
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  flex: 0 0 46px;
-  border: 1px solid rgba(246, 241, 231, 0.6);
-  border-radius: 50%;
-  font: italic 1.7rem "Playfair Display", Georgia, serif;
-}
-
-.footer-copy {
-  flex: 1;
-}
-
-.footer-title {
-  margin-bottom: 3px;
-  font: 600 1.15rem "Playfair Display", Georgia, serif;
-}
-
-.footer-copy p:last-child {
-  max-width: 650px;
-  margin-bottom: 0;
-  color: #d9e0d6;
-  font-size: 0.73rem;
-}
-
-.footer-map {
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  border: 1px solid rgba(246, 241, 231, 0.6);
-  border-radius: 50%;
-  color: white;
-  text-decoration: none;
-  font-size: 1.2rem;
-}
-
-.credits {
-  margin: 0;
-  padding: 12px;
-  color: var(--muted);
+  padding: 50px 24px 30px;
   text-align: center;
-  font-size: 0.65rem;
-  letter-spacing: 0.04em;
 }
 
-/* RESPONSIVE: TABLETAS Y CELULARES */
+.footer-brand {
+  margin-bottom: 8px;
+}
 
-@media (max-width: 720px) {
-  body {
-    padding: 0;
-    background: var(--cream);
+.site-footer > p {
+  margin-bottom: 20px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 25px;
+  margin-bottom: 28px;
+}
+
+.footer-links a {
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.footer-links a:hover {
+  color: var(--terracotta);
+}
+
+.copyright {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 1.8px;
+}
+
+/* =========================================
+   12. BOTÓN VOLVER ARRIBA
+========================================= */
+
+.back-to-top {
+  position: fixed;
+  z-index: 90;
+  right: 22px;
+  bottom: 22px;
+  display: grid;
+  width: 43px;
+  height: 43px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--green);
+  font-size: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* =========================================
+   13. ANIMACIONES DE APARICIÓN
+========================================= */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 650ms ease,
+    transform 650ms ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================================
+   14. TABLET
+========================================= */
+
+@media (max-width: 900px) {
+  .section-shell,
+  .nav-container {
+    width: min(100% - 44px, var(--page-width));
   }
 
-  .poster {
-    box-shadow: none;
+  .main-nav {
+    gap: 19px;
   }
 
   .hero {
-    grid-template-columns: 1fr;
-    padding: 38px 7% 28px;
+    min-height: 610px;
   }
 
-  .hero-photo {
-    height: 230px;
-    margin: 27px 0 0;
-    border-radius: 120px 120px 8px 8px;
+  .hero-content {
+    width: 80%;
+    margin-left: 42px;
   }
 
-  .section {
-    padding: 28px 7%;
+  .welcome-grid {
+    gap: 28px;
   }
 
-  .section + .section {
-    padding-top: 20px;
-  }
-
-  .two-col {
+  .experiences-section {
     grid-template-columns: 1fr;
   }
 
-  .place-card {
-    grid-template-columns: 35% 65%;
+  .experiences-intro {
+    max-width: 640px;
   }
 
-  .four-col {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .experiences-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .food-card img {
-    height: 145px;
+  .experience-item:first-child {
+    grid-column: auto;
   }
 
-  .craft-feature {
-    min-height: 310px;
-  }
-
-  .craft-overlay {
-    padding: 25px;
-  }
-
-  .mini-feature {
-    flex-wrap: wrap;
-  }
-
-  .mini-copy {
-    flex-basis: calc(100% - 60px);
-  }
-
-  .mini-feature > .map-button {
-    margin-left: 59px;
-  }
-
-  .excursion-card {
-    grid-template-columns: 1fr;
-  }
-
-  .excursion-card > img {
-    min-height: 190px;
-    max-height: 230px;
-  }
-
-  .excursion-copy {
-    padding: 22px;
-  }
-}
-
-@media (max-width: 420px) {
-  .hero {
-    padding-top: 31px;
-  }
-
-  .hero-photo {
+  .experience-image,
+  .experience-item:first-child .experience-image {
     height: 190px;
   }
 
-  .place-card {
-    grid-template-columns: 1fr;
-  }
-
-  .place-card > img {
-    height: 150px;
-    min-height: 150px;
-  }
-
-  .card-body {
-    padding: 16px;
-  }
-
-  .four-col {
-    gap: 10px;
-  }
-
-  .food-card img {
-    height: 105px;
-  }
-
-  .food-body {
-    padding: 12px 10px;
-  }
-
-  .food-body h3 {
-    min-height: 0;
-    font-size: 0.92rem;
-  }
-
-  .extra-links {
-    grid-template-columns: 1fr;
-  }
-
-  .footer {
-    align-items: flex-start;
-    padding: 22px 7%;
-  }
-
-  .footer-mark {
-    width: 38px;
-    height: 38px;
-    flex-basis: 38px;
-  }
-
-  .footer-title {
-    font-size: 1rem;
+  .experience-caption {
+    align-items: start;
   }
 }
 
-/* IMPRESIÓN */
+/* =========================================
+   15. MÓVIL
+========================================= */
 
-@media print {
-  @page {
-    size: A4 portrait;
-    margin: 10mm;
+@media (max-width: 680px) {
+  :root {
+    --section-space: 68px;
   }
 
-  body {
-    padding: 0;
-    background: white;
+  html {
+    scroll-padding-top: 70px;
   }
 
-  .poster {
+  .section-shell,
+  .nav-container {
+    width: calc(100% - 36px);
+  }
+
+  .nav-container {
+    min-height: 68px;
+  }
+
+  .brand-name {
+    font-size: 23px;
+  }
+
+  .menu-toggle {
+    position: relative;
+    z-index: 102;
+    display: block;
+  }
+
+  .main-nav {
+    position: fixed;
+    z-index: 101;
+    inset: 68px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 25px 26px;
+    background: var(--cream);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition:
+      opacity 200ms ease,
+      visibility 200ms ease,
+      transform 200ms ease;
+  }
+
+  .main-nav.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .main-nav > a {
+    padding: 17px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 15px;
+  }
+
+  .main-nav .nav-contact {
+    margin-top: 20px;
+    padding: 13px 16px;
+    border: 1px solid var(--green);
+    text-align: center;
+  }
+
+  .hero {
     width: 100%;
-    overflow: visible;
-    box-shadow: none;
+    min-height: 690px;
+    min-height: min(760px, 87svh);
   }
 
-  .hero,
-  .section,
-  .place-card,
-  .food-card,
-  .excursion-card,
-  .footer {
-    break-inside: avoid;
+  .hero-image {
+    background-position: 57% center;
   }
 
-  .map-button,
-  .footer-map {
-    print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
+  .hero-overlay {
+    background:
+      linear-gradient(
+        90deg,
+        rgb(25 39 30 / 77%),
+        rgb(25 39 30 / 40%)
+      ),
+      linear-gradient(
+        0deg,
+        rgb(25 39 30 / 36%),
+        transparent 60%
+      );
   }
 
-  a {
-    break-inside: avoid;
+  .hero-content {
+    width: calc(100% - 44px);
+    padding: 75px 0 95px;
+    margin-inline: 22px;
+  }
+
+  .hero h1 {
+    margin: 21px 0;
+    font-size: clamp(46px, 13vw, 66px);
+    letter-spacing: -1.8px;
+  }
+
+  .hero-description {
+    max-width: 400px;
+    font-size: 13px;
+  }
+
+  .hero-actions {
+    align-items: stretch;
+    flex-direction: column;
+    max-width: 290px;
+  }
+
+  .button {
+    min-height: 49px;
+  }
+
+  .hero-location {
+    right: 18px;
+    bottom: 21px;
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .scroll-cue {
+    display: none;
+  }
+
+  .welcome-label {
+    font-size: 9px;
+  }
+
+  .welcome-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .welcome-grid h2,
+  .section-heading h2,
+  .experiences-intro h2,
+  .stay-heading h2,
+  .closing-content h2 {
+    font-size: clamp(32px, 9vw, 43px);
+  }
+
+  .welcome-grid p {
+    font-size: 13px;
+  }
+
+  .section-heading {
+    align-items: start;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 27px;
+  }
+
+  .section-heading > p {
+    max-width: 420px;
+  }
+
+  .guides-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .guide-image-wrap {
+    height: 250px;
+  }
+
+  .guide-card-content {
+    padding: 25px 22px;
+  }
+
+  .guide-card h3 {
+    font-size: 30px;
+  }
+
+  .guide-card-content > p {
+    min-height: 0;
+  }
+
+  .experiences-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 23px 13px;
+  }
+
+  .experience-item:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .experience-image,
+  .experience-item:first-child .experience-image {
+    height: 180px;
+  }
+
+  .experience-item:first-child .experience-image {
+    height: 235px;
+  }
+
+  .experience-caption {
+    gap: 5px;
+  }
+
+  .experience-caption h3 {
+    font-size: 17px;
+  }
+
+  .experience-caption p {
+    font-size: 10px;
+  }
+
+  .experience-arrow {
+    font-size: 16px;
+  }
+
+  .stay-heading {
+    margin-bottom: 28px;
+  }
+
+  .stay-grid {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  .stay-card {
+    padding: 24px 21px;
+  }
+
+  .stay-description {
+    min-height: 0;
+  }
+
+  .closing-section {
+    width: 100%;
+    min-height: 390px;
+  }
+
+  .closing-content {
+    padding: 65px 23px;
+  }
+
+  .closing-content > p {
+    font-size: 12px;
+  }
+
+  .site-footer {
+    padding-top: 42px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .back-to-top {
+    right: 14px;
+    bottom: 14px;
+  }
+}
+
+/* =========================================
+   16. MÓVILES PEQUEÑOS
+========================================= */
+
+@media (max-width: 380px) {
+  .section-shell,
+  .nav-container {
+    width: calc(100% - 28px);
+  }
+
+  .hero-content {
+    width: calc(100% - 36px);
+    margin-inline: 18px;
+  }
+
+  .hero h1 {
+    font-size: 44px;
+  }
+
+  .experiences-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .experience-item:first-child {
+    grid-column: auto;
+  }
+
+  .experience-image,
+  .experience-item:first-child .experience-image {
+    height: 220px;
+  }
+
+  .hero-location {
+    font-size: 7px;
+  }
+}
+
+/* =========================================
+   17. ACCESIBILIDAD Y MOVIMIENTO REDUCIDO
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .intro-screen {
+    animation-delay: 0s;
   }
 }
