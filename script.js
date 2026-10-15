@@ -1,181 +1,131 @@
 
-/* =========================================
-   1. ELEMENTOS PRINCIPALES
-========================================= */
+document.addEventListener("DOMContentLoaded", () => {
+  // ========================================
+  // 1. ANIMACIÓN INICIAL DEL LOGO
+  // Se muestra una sola vez por sesión
+  // ========================================
 
-const introScreen = document.getElementById("introScreen");
-const menuToggle = document.getElementById("menuToggle");
-const mainNav = document.getElementById("mainNav");
-const backToTop = document.getElementById("backToTop");
+  const introScreen = document.getElementById("introScreen");
 
-const reducedMotion = window.matchMedia(
-  "(prefers-reduced-motion: reduce)"
-);
+  if (introScreen) {
+    const introYaMostrado = sessionStorage.getItem("introMostrado");
 
-/* =========================================
-   2. ANIMACIÓN DE BIENVENIDA
-========================================= */
-
-if (introScreen) {
-  const finishIntro = () => {
-    introScreen.classList.add("intro-finished");
-
-    // Retiramos la pantalla después de terminar
-    // la transición para no bloquear los clics.
-    introScreen.addEventListener(
-      "animationend",
-      (event) => {
-        if (event.animationName === "intro-exit") {
-          introScreen.remove();
-        }
-      },
-      { once: true }
-    );
-
-    // Respaldo por si el navegador no dispara
-    // animationend como se espera.
-    window.setTimeout(() => {
+    if (introYaMostrado) {
+      // Si ya apareció en esta sesión, eliminarlo inmediatamente
       introScreen.remove();
-    }, reducedMotion.matches ? 100 : 3200);
-  };
+    } else {
+      // Guardar que ya se mostró
+      sessionStorage.setItem("introMostrado", "true");
 
-  if (reducedMotion.matches) {
-    finishIntro();
-  } else {
-    // La animación CSS controla la duración.
-    // Escuchamos el evento para retirar la pantalla.
-    introScreen.addEventListener(
-      "animationend",
-      (event) => {
-        if (event.animationName === "intro-exit") {
+      // Eliminar la pantalla al terminar la animación
+      const finishIntro = () => {
+        if (introScreen.parentNode) {
           introScreen.remove();
         }
-      },
-      { once: true }
-    );
-  }
-}
+      };
 
-/* =========================================
-   3. MENÚ MÓVIL
-========================================= */
-
-function closeMenu() {
-  if (!menuToggle || !mainNav) return;
-
-  menuToggle.setAttribute("aria-expanded", "false");
-  menuToggle.setAttribute("aria-label", "Abrir menú");
-
-  mainNav.classList.remove("is-open");
-  document.body.classList.remove("menu-open");
-}
-
-function toggleMenu() {
-  if (!menuToggle || !mainNav) return;
-
-  const isOpen =
-    menuToggle.getAttribute("aria-expanded") === "true";
-
-  menuToggle.setAttribute("aria-expanded", String(!isOpen));
-  menuToggle.setAttribute(
-    "aria-label",
-    isOpen ? "Abrir menú" : "Cerrar menú"
-  );
-
-  mainNav.classList.toggle("is-open", !isOpen);
-  document.body.classList.toggle("menu-open", !isOpen);
-}
-
-if (menuToggle && mainNav) {
-  menuToggle.addEventListener("click", toggleMenu);
-
-  // Cerrar el menú al elegir una sección.
-  mainNav.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", closeMenu);
-  });
-
-  // Cerrar con Escape.
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeMenu();
-    }
-  });
-
-  // Cerrar si se vuelve a una pantalla grande.
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 680) {
-      closeMenu();
-    }
-  });
-}
-
-/* =========================================
-   4. APARICIÓN DE SECCIONES AL DESPLAZARSE
-========================================= */
-
-const revealElements = document.querySelectorAll(".reveal");
-
-if ("IntersectionObserver" in window && !reducedMotion.matches) {
-  const revealObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        }
+      introScreen.addEventListener("animationend", finishIntro, {
+        once: true
       });
-    },
-    {
-      threshold: 0.12,
-      rootMargin: "0px 0px -35px 0px"
+
+      // Respaldo por si la animación no termina
+      setTimeout(finishIntro, 3500);
     }
-  );
-
-  revealElements.forEach((element) => {
-    revealObserver.observe(element);
-  });
-} else {
-  // Compatibilidad con navegadores sin IntersectionObserver
-  // y dispositivos que solicitan movimiento reducido.
-  revealElements.forEach((element) => {
-    element.classList.add("is-visible");
-  });
-}
-
-/* =========================================
-   5. BOTÓN VOLVER ARRIBA
-========================================= */
-
-function updateBackToTop() {
-  if (!backToTop) return;
-
-  if (window.scrollY > 450) {
-    backToTop.classList.add("visible");
-  } else {
-    backToTop.classList.remove("visible");
   }
-}
 
-window.addEventListener("scroll", updateBackToTop, {
-  passive: true
-});
+  // ========================================
+  // 2. MENÚ DE NAVEGACIÓN PARA MÓVILES
+  // ========================================
 
-updateBackToTop();
+  const menuToggle = document.querySelector(".menu-toggle");
+  const navMenu = document.querySelector(".nav-links");
 
-/* =========================================
-   6. CIERRE DEL MENÚ AL TOCAR FUERA
-========================================= */
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener("click", () => {
+      navMenu.classList.toggle("active");
 
-document.addEventListener("click", (event) => {
-  if (!menuToggle || !mainNav) return;
+      const menuAbierto = navMenu.classList.contains("active");
+      menuToggle.setAttribute("aria-expanded", menuAbierto);
+    });
 
-  const isOpen =
-    menuToggle.getAttribute("aria-expanded") === "true";
+    // Cerrar el menú al seleccionar un enlace
+    navMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navMenu.classList.remove("active");
+        menuToggle.setAttribute("aria-expanded", "false");
+      });
+    });
 
-  const clickedInsideMenu = mainNav.contains(event.target);
-  const clickedToggle = menuToggle.contains(event.target);
+    // Cerrar el menú al hacer clic fuera de él
+    document.addEventListener("click", (event) => {
+      if (
+        !navMenu.contains(event.target) &&
+        !menuToggle.contains(event.target)
+      ) {
+        navMenu.classList.remove("active");
+        menuToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
 
-  if (isOpen && !clickedInsideMenu && !clickedToggle) {
-    closeMenu();
+  // ========================================
+  // 3. ANIMACIONES AL DESPLAZARSE POR LA PÁGINA
+  // ========================================
+
+  const revealElements = document.querySelectorAll(".reveal");
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries, observerInstance) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observerInstance.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.15
+      }
+    );
+
+    revealElements.forEach((element) => {
+      observer.observe(element);
+    });
+  } else {
+    // Mostrar el contenido si el navegador no admite IntersectionObserver
+    revealElements.forEach((element) => {
+      element.classList.add("is-visible");
+    });
+  }
+
+  // ========================================
+  // 4. BOTÓN PARA VOLVER ARRIBA
+  // ========================================
+
+  const backToTop = document.querySelector(".back-to-top");
+
+  if (backToTop) {
+    // Mostrar u ocultar el botón según el desplazamiento
+    const updateBackToTop = () => {
+      if (window.scrollY > 400) {
+        backToTop.classList.add("visible");
+      } else {
+        backToTop.classList.remove("visible");
+      }
+    };
+
+    window.addEventListener("scroll", updateBackToTop);
+    updateBackToTop();
+
+    // Regresar al inicio al pulsar el botón
+    backToTop.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
   }
 });
