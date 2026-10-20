@@ -574,6 +574,20 @@ h3 {
     padding-top: 20px;
   }
 
+  .section-number {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+    font-size: 0.9rem;
+  }
+
+  .mini-icon {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+    font-size: 1rem;
+  }
+
   .two-col {
     grid-template-columns: 1fr;
   }
@@ -673,9 +687,16 @@ h3 {
   }
 
   .footer-mark {
-    width: 38px;
-    height: 38px;
-    flex-basis: 38px;
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+    font-size: 1.4rem;
+  }
+
+  .footer-map {
+    width: 34px;
+    height: 34px;
+    font-size: 1rem;
   }
 
   .footer-title {

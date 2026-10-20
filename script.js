@@ -38,22 +38,30 @@ document.addEventListener("DOMContentLoaded", () => {
   // ========================================
 
   const menuToggle = document.querySelector(".menu-toggle");
-  const navMenu = document.querySelector(".nav-links");
+  const navMenu = document.querySelector(".main-nav");
 
   if (menuToggle && navMenu) {
-    menuToggle.addEventListener("click", () => {
-      navMenu.classList.toggle("active");
+    const closeMenu = () => {
+      navMenu.classList.remove("is-open");
+      document.body.classList.remove("menu-open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.setAttribute("aria-label", "Abrir menú");
+    };
 
-      const menuAbierto = navMenu.classList.contains("active");
-      menuToggle.setAttribute("aria-expanded", menuAbierto);
+    menuToggle.addEventListener("click", () => {
+      const menuAbierto = menuToggle.getAttribute("aria-expanded") !== "true";
+      navMenu.classList.toggle("is-open", menuAbierto);
+      document.body.classList.toggle("menu-open", menuAbierto);
+      menuToggle.setAttribute("aria-expanded", String(menuAbierto));
+      menuToggle.setAttribute(
+        "aria-label",
+        menuAbierto ? "Cerrar menú" : "Abrir menú"
+      );
     });
 
     // Cerrar el menú al seleccionar un enlace
     navMenu.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        navMenu.classList.remove("active");
-        menuToggle.setAttribute("aria-expanded", "false");
-      });
+      link.addEventListener("click", closeMenu);
     });
 
     // Cerrar el menú al hacer clic fuera de él
@@ -62,8 +70,17 @@ document.addEventListener("DOMContentLoaded", () => {
         !navMenu.contains(event.target) &&
         !menuToggle.contains(event.target)
       ) {
-        navMenu.classList.remove("active");
-        menuToggle.setAttribute("aria-expanded", "false");
+        closeMenu();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (
+        event.key === "Escape" &&
+        menuToggle.getAttribute("aria-expanded") === "true"
+      ) {
+        closeMenu();
+        menuToggle.focus();
       }
     });
   }
